@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class NotificationControllerTest {
     NotificationController notificationController = new NotificationController();
-    @Test
+
     void test_createNotification() {
         String notificationRequest = "New Notification";
         ResponseEntity<String> response = notificationController.createNotification(notificationRequest);

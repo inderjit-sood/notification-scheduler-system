@@ -1,5 +1,7 @@
 package com.goodapps.application.controllers;
 
+import com.goodapps.application.repositories.NotificationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +15,16 @@ import java.util.concurrent.atomic.AtomicLong;
 public class NotificationController {
     private Map<Long, String> notificationMap = new ConcurrentHashMap<>();
     private AtomicLong idAssign = new AtomicLong(0);
+
+    @Autowired
+    private NotificationRepository notificationRepository;
     @PostMapping("/create")
     public ResponseEntity<String> createNotification(@RequestBody String notification) {
         try {
             System.out.println("Got notification creation request: " + notification);
             Long idToAssign = idAssign.incrementAndGet();
-            notificationMap.put(idToAssign, notification);
+            //notificationMap.put(idToAssign, notification);
+            notificationRepository.createNotification(idToAssign, notification);
             return new ResponseEntity<>(notification, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -28,8 +34,9 @@ public class NotificationController {
     @GetMapping("/get/{id}")
     public ResponseEntity<String> getNotification(@PathVariable long id) {
         try {
-            if(!notificationMap.containsKey(id)) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-            String notification = notificationMap.get(id);
+            //if(!notificationMap.containsKey(id)) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            //String notification = notificationMap.get(id);
+            String notification = notificationRepository.getNotificationById(id);
             return new ResponseEntity<>(notification, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
