@@ -27,6 +27,7 @@ public class NotificationController {
             notificationRepository.createNotification(idToAssign, notification);
             return new ResponseEntity<>(notification, HttpStatus.CREATED);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
