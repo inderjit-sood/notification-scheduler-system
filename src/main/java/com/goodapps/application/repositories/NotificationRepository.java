@@ -26,9 +26,9 @@ public class NotificationRepository {
         }
     }
 
-    public Boolean createNotification(Long id, String notification) throws java.sql.SQLException{
-        String query = "INSERT INTO notifications (id, notification) " +
-                "VALUES ("+id+",\""+notification+"\")";
+    public Boolean createNotification(String notification) throws java.sql.SQLException{
+        String query = "INSERT INTO notifications (notification) " +
+                "VALUES (\""+notification+"\")";
         try(Connection conn = DriverManager.getConnection(connectionUrl, "root", "password")) {
             PreparedStatement ps = conn.prepareStatement(query);
             System.out.println(ps);
@@ -39,5 +39,13 @@ public class NotificationRepository {
             return Boolean.FALSE;
         }
 
+    }
+
+    public Boolean updateNotification() {
+        return Boolean.TRUE;
+    }
+
+    public Boolean deleteNotification() {
+        return Boolean.TRUE;
     }
 }
