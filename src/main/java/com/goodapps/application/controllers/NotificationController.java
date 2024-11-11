@@ -1,5 +1,6 @@
 package com.goodapps.application.controllers;
 
+import com.goodapps.application.models.Notification;
 import com.goodapps.application.repositories.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +13,7 @@ public class NotificationController {
     @Autowired
     private NotificationRepository notificationRepository;
     @PostMapping("/create")
-    public ResponseEntity<String> createNotification(@RequestBody String notification) {
+    public ResponseEntity<String> createNotification(@RequestBody Notification notification) {
         try {
             System.out.println("Got notification creation request: " + notification);
             notificationRepository.createNotification(notification);
